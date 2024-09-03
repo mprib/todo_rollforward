@@ -1,6 +1,7 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import { execSync } from "child_process";
 
 const banner =
 `/*
@@ -11,39 +12,77 @@ if you want to view the source, please visit the github repository of this plugi
 
 const prod = (process.argv[2] === "production");
 
+function runDeploy() {
+    try {
+        console.log('Running deploy script...');
+        execSync('npm run deploy', { stdio: 'inherit' });
+        console.log('Deploy completed successfully');
+    } catch (error) {
+        console.error('Deploy failed:', error);
+    }
+}
+
+const deployPlugin = {
+    name: 'deploy',
+    setup(build) {
+        build.onEnd(result => {
+            if (result.errors.length === 0) {
+                console.log('Build succeeded, running deploy...');
+                runDeploy();
+            } else {
+                console.error('Build failed, skipping deploy.');
+            }
+        });
+    },
+};
+
 const context = await esbuild.context({
-	banner: {
-		js: banner,
-	},
-	entryPoints: ["main.ts"],
-	bundle: true,
-	external: [
-		"obsidian",
-		"electron",
-		"@codemirror/autocomplete",
-		"@codemirror/collab",
-		"@codemirror/commands",
-		"@codemirror/language",
-		"@codemirror/lint",
-		"@codemirror/search",
-		"@codemirror/state",
-		"@codemirror/view",
-		"@lezer/common",
-		"@lezer/highlight",
-		"@lezer/lr",
-		...builtins],
-	format: "cjs",
-	target: "es2018",
-	logLevel: "info",
-	sourcemap: prod ? false : "inline",
-	treeShaking: true,
-	outfile: "dist/main.js",
-	minify: prod,
+    banner: {
+        js: banner,
+    },
+    entryPoints: ["main.ts"],
+    bundle: true,
+    external: [
+        "obsidian",
+        "electron",
+        "@codemirror/autocomplete",
+        "@codemirror/collab",
+        "@codemirror/commands",
+        "@codemirror/language",
+        "@codemirror/lint",
+        "@codemirror/search",
+        "@codemirror/state",
+        "@codemirror/view",
+        "@lezer/common",
+        "@lezer/highlight",
+        "@lezer/lr",
+        ...builtins],
+    format: "cjs",
+    target: "es2018",
+    logLevel: "info",
+    sourcemap: prod ? false : "inline",
+    treeShaking: true,
+    outfile: "dist/main.js",
+    minify: prod,
+    plugins: [deployPlugin],
 });
 
 if (prod) {
-	await context.rebuild();
-	process.exit(0);
+    console.log("About to await context rebuild")
+    await context.rebuild();
+    process.exit(0);
 } else {
-	await context.watch();
+    console.log("About to await context watch")
+    await context.watch();
+    console.log('Watching for changes...');
+    process.stdin.on('data', async data => {
+        const input = data.toString().trim().toLowerCase();
+        if (input === 'r') {
+            console.log('Manual rebuild triggered.');
+            await context.rebuild();
+        } else if (input === 'q') {
+            await context.dispose();
+            process.exit(0);
+        }
+    });
 }
