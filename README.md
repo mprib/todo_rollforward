@@ -1,20 +1,10 @@
-# Obsidian Sample Plugin
+# Origin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This sample plugin is derived from the template that I forked [here](https://github.com/mprib/obsidian-sample-plugin)
 
-This project uses TypeScript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in TypeScript Definition format, which contains TSDoc comments describing what it does.
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
-
-## First time developing plugins?
+## Getting started
 
 Quick starting guide for new plugin devs:
 
@@ -25,8 +15,13 @@ Quick starting guide for new plugin devs:
 - Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
 - Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
 - Reload Obsidian to load the new version of your plugin.
+  - I've found the [hotreload](https://github.com/pjeby/hot-reload) plugin to be helpful for iterating. It requires a file called `.hotreload` be stored in the plugin folder. Changes to `main.js` or `styles.css` will cause the plug in to be automatically reloaded.
 - Enable plugin in settings window.
 - For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+
+### Note
+
+I've made some tweaks to `package.json` that mean I can run `npm run build:deploy` and the updated `main.ts` and `styles.css` will get pushed to the destination directory within obsidian. Note that this is only currently going to work on the windows machine because of the paths (I believe it will currently break on linux but haven't confirmed).
 
 ## Releasing new releases
 
@@ -56,6 +51,9 @@ Quick starting guide for new plugin devs:
 ## Manually installing the plugin
 
 - Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+
+### note
+this has been overriden with the deploy script
 
 ## Improve code quality with eslint (optional)
 - [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
