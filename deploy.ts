@@ -39,4 +39,3 @@ fs.copyFileSync(sourceMainJs, destMainJs);
 fs.copyFileSync(sourceManifest, destManifest);
 
 console.log('Plugin files deployed successfully!');
-console.log('Copied files:');
