@@ -26,7 +26,7 @@ export default class ChecklistMigration extends Plugin {
 		await this.loadSettings();
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new MigrationSettingsTab(this.app, this));
+		this.addSettingTab(new ChecklistMigrationSettingsTab(this.app, this));
 
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
@@ -46,7 +46,7 @@ export default class ChecklistMigration extends Plugin {
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				console.log("Current Selection", editor.getSelection());
 				console.log("Active File: ", this.app.workspace.getActiveFile());
-				console.log("Editor value", editor.getValue());
+				console.log("Editor value:", editor.getValue());
 			}
 		});
 
@@ -77,7 +77,7 @@ export default class ChecklistMigration extends Plugin {
 }
 
 
-class MigrationSettingsTab extends PluginSettingTab {
+class ChecklistMigrationSettingsTab extends PluginSettingTab {
 	plugin: ChecklistMigration;
 
 	constructor(app: App, plugin: ChecklistMigration) {

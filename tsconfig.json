@@ -1,3 +1,4 @@
+
 {
   "compilerOptions": {
     "baseUrl": ".",
@@ -17,7 +18,11 @@
       "ES5",
       "ES6",
       "ES7"
-    ]
+    ],
+    "paths": {
+      "src_root/*": ["src/*"],
+      "test_root/*": ["tests/*"]
+    },   
   },
   "include": [
     "**/*.ts"
