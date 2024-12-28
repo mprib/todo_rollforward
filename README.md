@@ -1,8 +1,27 @@
-# Origin
+# Mac Notes
 
 This sample plugin is derived from the template that I forked [here](https://github.com/mprib/obsidian-sample-plugin)
 
 
+### Tests
+
+Tests are performed by `jest`. Directory aliases are set up in `tsconfig.json` and remapped in `jest.config.js` as well.
+
+### Deploying
+
+Run `npm run build:deploy`. This is defined in `package.json` and it will export it to the obsidian plug in folder as a single `js` file with everything rolled up.
+
+### Hot Reload
+
+This plugin requires a file called `.hotreload` in the plugin subfolder so that any changed file will cause the plug in to refresh in the open obsidian.
+
+### Obsidian Console View
+
+Hit `Ctrl + Shift + i` to view the live output from the code that runs. As far as I can tell this is the most straightfoward way to debug.
+
+
+
+# Original
 
 ## Getting started
 
