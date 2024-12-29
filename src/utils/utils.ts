@@ -31,6 +31,5 @@ export function filterDone(input: string): string {
     }
   }
   
-  // Join with newlines and ensure single newline at end
-  return result.join('\n') + '\n';
+  return result.join();
 }
