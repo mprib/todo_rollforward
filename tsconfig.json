@@ -24,7 +24,5 @@
       "test_root/*": ["tests/*"]
     },   
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["src/**/*", "tests/**/*"]
 }
