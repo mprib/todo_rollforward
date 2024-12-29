@@ -15,7 +15,6 @@
                 "--runInBand",
                 "--config",
                 "${workspaceFolder}/jest.config.js",
-                "--testPathPattern=tests/utils/utils.test.ts",
                 "--no-cache",
                 "--watchAll=false",
                 "--verbose"
