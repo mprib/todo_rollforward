@@ -102,6 +102,8 @@ This is some text that is just sitting in here
 `
 
 const rolledForwardToDo = `
+# Reflection
+This is some preliminary text that would be part of a daily note that I want to ignore.
 
 # Projects
 This is some text that is just sitting in here
