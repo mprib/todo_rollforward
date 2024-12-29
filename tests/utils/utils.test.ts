@@ -2,15 +2,32 @@
 // /tests/utils/utils.test.ts
 
 import { arch } from 'os';
-import {replaceToDoMarkers} from 'src_root/utils/utils';
+import {replaceToDoMarkers, filterDone} from 'src_root/utils/utils';
 
 describe('Utils', () => {
   // You can add more test cases
   test('undone items converted to []', () => {
     const result = replaceToDoMarkers(prelimToDo);
+    console.log("Preliminary Text")
+    console.log(prelimToDo)
+    console.log("Result Text after replacing ToDo Markers")
+    console.log(result)
     expect(result).toBe(archivedToDo);
   });
+
+  test('create filtered list for new note', () => {
+    const result = filterDone(prelimToDo);
+    console.log("Preliminary Text")
+    console.log(prelimToDo)
+    console.log("Result Text after filtering done")
+    console.log(result)
+    expect(result).toBe(rolledForwardToDo)
+
+  });
+
 });
+
+
 
 
 const prelimToDo = `
@@ -85,6 +102,7 @@ This is some text that is just sitting in here
 `
 
 const rolledForwardToDo = `
+
 # Projects
 This is some text that is just sitting in here
 
