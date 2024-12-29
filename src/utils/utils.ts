@@ -1,4 +1,4 @@
 
-export function sayHello(name: string): string {
-  return `Hello, ${name}!`;
+export function replaceToDoMarkers(text: string): string {
+  return text.replace(/- \[ \]/g, '- []');
 }
