@@ -5,8 +5,22 @@ export function replaceToDoMarkers(input: string): string {
   return input.replace(/- \[ \]/g, '- []');
 }
 
-export function filterDone(input: string): string {
-  const lines = input.split('\n');
+
+function removeDone(input: string): string {
+  if (!input) return input;
+
+  return input
+    .split('\n')
+    .filter(line => !line.includes('- [x]'))
+    .join('\n');
+}
+
+
+export function filterList(input: string): string {
+  
+  const without_done = removeDone(input)
+
+  const lines = without_done.split('\n');
   let result: string[] = [];
   let currentHeader = '';
   
@@ -20,16 +34,11 @@ export function filterDone(input: string): string {
       continue;
     }
     
-    // Skip done items 
-    if (line.includes('- [x]') ) {
-      continue;
-    }
-    
     // If we have a current header, preserve the line
     if (currentHeader) {
       result.push(line);
     }
   }
   
-  return result.join();
+  return result.join('\n').trim();
 }

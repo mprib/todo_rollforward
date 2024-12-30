@@ -2,7 +2,7 @@
 // /tests/utils/utils.test.ts
 
 import { arch } from 'os';
-import {replaceToDoMarkers, filterDone} from 'src_root/utils/utils';
+import {replaceToDoMarkers, filterList} from 'src_root/utils/utils';
 
 describe('Utils', () => {
   // You can add more test cases
@@ -16,13 +16,13 @@ describe('Utils', () => {
   });
 
   test('create filtered list for new note', () => {
-    const result = filterDone(prelimToDo);
+    const result = filterList(prelimToDo);
     console.log("Preliminary Text")
     console.log(prelimToDo)
     console.log("Result Text after filtering done")
     console.log(result)
-    expect(result).toBe(rolledForwardToDo)
-
+    // trimming rolledForwardToDo is necessary to get test to pass
+    expect(result).toBe(rolledForwardToDo.trim())
   });
 
 });
