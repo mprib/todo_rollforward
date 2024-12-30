@@ -1,4 +1,5 @@
 import { App, Editor, FileSystemAdapter, editorEditorField, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Workspace } from 'obsidian';
+import { replaceToDoMarkers, filterList } from './utils/utils';
 
 // Remember to rename these classes and interfaces!
 interface ChecklistMigrationSettings {
@@ -24,6 +25,24 @@ export default class ChecklistMigration extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+		this.addCommand({
+			id: "'filter-checklist-and-copy-to-clipboard'",
+			name: 'filter checklist and copy to clipboard',
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				// console.log("Current Selection", editor.getSelection());
+				// console.log("Active File: ", this.app.workspace.getActiveFile());
+				// console.log("Editor value:", editor.getValue());
+			
+				const editorText:string = editor.getValue()
+				const newList:string = filterList(editorText)
+				const archivedList:string = replaceToDoMarkers(editorText)
+
+				editor.setValue(archivedList)
+				navigator.clipboard.writeText(newList)
+
+			}
+		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new ChecklistMigrationSettingsTab(this.app, this));
